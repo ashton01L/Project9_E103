@@ -38,7 +38,7 @@ class Point:
         """
         return self._y_coord
 
-    def set_x(self):
+    def set_x(self, x_coord):
         """
         Sets the x-axis coordinate of the point.
 
@@ -46,7 +46,7 @@ class Point:
         """
         self._x_coord = x_coord
 
-    def set_y(self):
+    def set_y(self, y_coord):
         """
         Sets the y-axis coordinate of the point
 
@@ -54,15 +54,15 @@ class Point:
         """
         self._y_coord = y_coord
 
-    def distance_to(self, Point):
+    def distance_to(self, other_point):
         """
         Calculates the distance between two Point objects.
 
         :param: Point: another Point object.
         :return: (float): Returns the distance between the two Point objects as a float.
         """
-        dx = Point.get_x_coord() - self._x_coord
-        dy = Point.get_y_coord() - self._y_coord
+        dx = other_point.get_x_coord() - self._x_coord
+        dy = other_point.get_y_coord() - self._y_coord
         return (dx**2 + dy**2) ** 0.5
 
 class LineSegment:
@@ -73,15 +73,15 @@ class LineSegment:
         _endpoint_1 (Point): The first endpoint of the line segment.
         _endpoint_2 (Point): The second endpoint of the line segment.
     """
-    def __init__(self, endpoint1, endpoint2):
+    def __init__(self, endpoint_1, endpoint_2):
         """
         Initializes a LineSegment object.
 
         :param: endpoint_1 (Point): The first endpoint of the line segment.
         :param: endpoint_2 (Point): The second endpoint of the line segment.
         """
-        self._endpoint_1 = endpoint1
-        self._endpoint_2 = endpoint2
+        self._endpoint_1 = endpoint_1
+        self._endpoint_2 = endpoint_2
 
     def get_endpoint_1(self):
         """
@@ -99,21 +99,21 @@ class LineSegment:
         """
         return self._endpoint_2
 
-    def set_endpoint_1(self):
+    def set_endpoint_1(self, endpoint_1):
         """
         Sets the first endpoint of the line segment.
 
         :return: The new first endpoint.
         """
-        self._endpoint_1 = endpoint1
+        self._endpoint_1 = endpoint_1
 
-    def set_endpoint_2(self):
+    def set_endpoint_2(self, endpoint_2):
         """
         Sets the second endpoint of the line segment.
 
         :return: The new second endpoint.
         """
-        self._endpoint_2 = endpoint2
+        self._endpoint_2 = endpoint_2
 
     def length(self):
         """
@@ -131,8 +131,8 @@ class LineSegment:
         """
         dx = self._endpoint_2.get_x_coord() - self._endpoint_1.get_x_coord()
         dy = self._endpoint_2.get_y_coord() - self._endpoint_1.get_y_coord()
-        if dx == 0 or dx == dy:
-            raise ValueError("None")
+        if dx == 0:
+            return None  # slope is undefined
         return dy / dx
 
     def is_parallel_to(self, other_line):
@@ -141,16 +141,26 @@ class LineSegment:
 
         :param other_line: Another line segment.
 
-        :return: True if the two line segments are parallel, False otherwise.
+        :return: bool: True if the two line segments are parallel, False otherwise.
         """
         try:
             slope_1 = self.slope()
             slope_2 = other_line.slope()
+
+            # Edge cases where both line segments are vertical and thus have ZERO slope
+            if slope_1 is None and slope_2 is None:
+                return True
+
+            # Edge cases where one line segment is vertical and the other is not, thus they are not parallel
+            if slope_1 is None or slope_2 is None:
+                return False
+
+            # Compare slopes using floating-point precision as instructed in prompt
             return abs(slope_1 - slope_2) < 0.000001
         except ValueError:
             # if both lines are vertical, they are parallel.
             return self._endpoint_1.get_x_coord() == self._endpoint_2.get_x_coord() and \
-                other_line.get._endpoint1().get_x_coord() == other_line.get._endpoint2().get_x_coord()
+                other_line.get_endpoint_1().get_x_coord() == other_line.get_endpoint_2().get_x_coord()
 
 # point_1 = Point(7, 4)
 # point_2 = Point(-6, 18)
@@ -183,3 +193,13 @@ class LineSegment:
 # print(line_seg_1.is_parallel_to(line_seg_5))  # False
 #
 # print(line_seg_3.is_parallel_to(line_seg_5))  # True
+#
+# point_11 = Point(1,1)
+# point_12 = Point(4,4)
+# line_seg_6 = LineSegment(point_11, point_12)
+# print(line_seg_1.is_parallel_to(line_seg_6)) # False
+#
+# point_13 = Point(1,-4)
+# point_14 = Point(4,-1)
+# line_seg_7 = LineSegment(point_13, point_14)
+# print(line_seg_6.is_parallel_to(line_seg_7))  # True
