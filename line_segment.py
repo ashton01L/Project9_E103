@@ -204,12 +204,12 @@ class LineSegment:
 # line_seg_6 = LineSegment(point_11, point_12)
 # print(line_seg_1.is_parallel_to(line_seg_6)) # False
 
-point_13 = Point(1,-4)
-point_14 = Point(4,-1)
-line_seg_7 = LineSegment(point_13, point_14)
+# point_13 = Point(1,-4)
+# point_14 = Point(4,-1)
+# line_seg_7 = LineSegment(point_13, point_14)
 # print(line_seg_6.is_parallel_to(line_seg_7))  # True
 
-point_15 = Point(1,1)
-point_16 = Point(1,1)
-line_seg_8 = LineSegment(point_15, point_16)
-print(line_seg_7.is_parallel_to(line_seg_8))  # True
+# point_15 = Point(1,1)
+# point_16 = Point(1,1)
+# line_seg_8 = LineSegment(point_15, point_16)
+# print(line_seg_7.is_parallel_to(line_seg_8))  # True
