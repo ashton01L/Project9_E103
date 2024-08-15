@@ -146,7 +146,7 @@ class LineSegment:
 
         # Check if either line segment has zero length
         if self.length() == 0 or other_line.length() == 0:
-            return True
+            return False
         # If both lines are exactly the same zero-length point, they are parallel
         if self._endpoint_1.get_x_coord() == other_line.get_endpoint_1().get_x_coord() and \
                self._endpoint_1.get_y_coord() == other_line.get_endpoint_1().get_y_coord():
