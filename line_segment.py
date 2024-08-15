@@ -22,7 +22,7 @@ class Point:
         self._x_coord = x_coord
         self._y_coord = y_coord
 
-    def get_x(self):
+    def get_x_coord(self):
         """
         Returns the x-axis coordinate of the point.
 
@@ -30,7 +30,7 @@ class Point:
         """
         return self._x_coord
 
-    def get_y(self):
+    def get_y_coord(self):
         """
         Returns the y-axis coordinate of the point.
 
@@ -61,8 +61,8 @@ class Point:
         :param: Point: another Point object.
         :return: (float): Returns the distance between the two Point objects as a float.
         """
-        dx = Point.get_x() - self._x_coord
-        dy = Point.get_y() - self._y_coord
+        dx = Point.get_x_coord() - self._x_coord
+        dy = Point.get_y_coord() - self._y_coord
         return (dx**2 + dy**2) ** 0.5
 
 class LineSegment:
@@ -83,7 +83,7 @@ class LineSegment:
         self._endpoint_1 = endpoint1
         self._endpoint_2 = endpoint2
 
-    def get_x(self):
+    def get_x_coord(self):
         """
         Returns the first endpoint of the line segment.
 
@@ -91,7 +91,7 @@ class LineSegment:
         """
         return self._endpoint_1
 
-    def get_x(self):
+    def get_y_coord(self):
         """
         Returns the second endpoint of the line segment.
 
@@ -129,10 +129,10 @@ class LineSegment:
 
         :return: The slope of the line segment.
         """
-        dx = self._endpoint_2.get_x() - self._endpoint_1.get_x()
-        dy = self._endpoint_2.get_y() - self._endpoint_1.get_y()
-        if dx == 0:
-            raise ValueError("Slope is undefined for a vertical line segment.")
+        dx = self._endpoint_2.get_x_coord() - self._endpoint_1.get_x_coord()
+        dy = self._endpoint_2.get_y_coord() - self._endpoint_1.get_y_coord()
+        if dx == 0 or dx == dy:
+            raise ValueError("None")
         return dy / dx
 
     def is_parallel_to(self, other_line):
@@ -149,8 +149,8 @@ class LineSegment:
             return abs(slope_1 - slope_2) < 0.000001
         except ValueError:
             # if both lines are vertical, they are parallel.
-            return self._endpoint_1.get_x() == self._endpoint_2.get_x() and \
-                other_line.get._endpoint1().get_x() == other_line.get._endpoint2().get_x()
+            return self._endpoint_1.get_x_coord() == self._endpoint_2.get_x_coord() and \
+                other_line.get._endpoint1().get_x_coord() == other_line.get._endpoint2().get_x_coord()
 
 # point_1 = Point(7, 4)
 # point_2 = Point(-6, 18)
