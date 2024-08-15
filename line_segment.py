@@ -143,39 +143,29 @@ class LineSegment:
 
         :return: bool: True if the two line segments are parallel, False otherwise.
         """
-        try:
-            slope_1 = self.slope()
-            slope_2 = other_line.slope()
 
-            # Edge cases where both line segments are vertical and thus have ZERO slope
-            if slope_1 is None and slope_2 is None:
-                return True
-
-            # Edge cases where one line segment is vertical and the other is not, thus they are not parallel
-            if slope_1 is None or slope_2 is None:
-                return False
-
-            # Handle case where one or both line segments have zero length
-            if self.length() == 0 or other_line.length() == 0:
-                # If the zero-length segment lies exactly on the other segment, return False
-                if self.length() == 0:
-                    single_point = self.get_endpoint_1()
-                    if other_line.get_endpoint_1().distance_to(
-                            single_point) + other_line.get_endpoint_2().distance_to(single_point) == other_line.length():
-                        return False
-                if other_line.length() == 0:
-                    single_point = other_line.get_endpoint_1()
-                    if self.get_endpoint_1().distance_to(single_point) + self.get_endpoint_2().distance_to(
-                            single_point) == self.length():
-                        return False
+        # Check if either line segment has zero length
+        if self.length() == 0 or other_line.length() == 0:
+            return True
+        # If both lines are exactly the same zero-length point, they are parallel
+        if self._endpoint_1.get_x_coord() == other_line.get_endpoint_1().get_x_coord() and \
+               self._endpoint_1.get_y_coord() == other_line.get_endpoint_1().get_y_coord():
             return True
 
-            # Compare slopes using floating-point precision as instructed in prompt
-            return abs(slope_1 - slope_2) < 0.000001
-        except ValueError:
-            # if both lines are vertical, they are parallel.
-            return self._endpoint_1.get_x_coord() == self._endpoint_2.get_x_coord() and \
-                other_line.get_endpoint_1().get_x_coord() == other_line.get_endpoint_2().get_x_coord()
+        slope_1 = self.slope()
+        slope_2 = other_line.slope()
+
+        # Edge cases where both line segments are vertical and thus have ZERO slope
+        if slope_1 is None and slope_2 is None:
+            return True
+
+        # Edge cases where one line segment is vertical and the other is not, thus they are not parallel
+        if slope_1 is None or slope_2 is None:
+            return False
+
+        # Compare slopes using floating-point precision as instructed in prompt
+        return abs(slope_1 - slope_2) < 0.000001
+
 
 # point_1 = Point(7, 4)
 # point_2 = Point(-6, 18)
@@ -213,13 +203,13 @@ class LineSegment:
 # point_12 = Point(4,4)
 # line_seg_6 = LineSegment(point_11, point_12)
 # print(line_seg_1.is_parallel_to(line_seg_6)) # False
-# #
-# point_13 = Point(1,-4)
-# point_14 = Point(4,-1)
-# line_seg_7 = LineSegment(point_13, point_14)
-# # print(line_seg_6.is_parallel_to(line_seg_7))  # True
-#
-# point_15 = Point(1,1)
-# point_16 = Point(1,1)
-# line_seg_8 = LineSegment(point_15, point_16)
-# print(line_seg_7.is_parallel_to(line_seg_8))  # True
+
+point_13 = Point(1,-4)
+point_14 = Point(4,-1)
+line_seg_7 = LineSegment(point_13, point_14)
+# print(line_seg_6.is_parallel_to(line_seg_7))  # True
+
+point_15 = Point(1,1)
+point_16 = Point(1,1)
+line_seg_8 = LineSegment(point_15, point_16)
+print(line_seg_7.is_parallel_to(line_seg_8))  # True
