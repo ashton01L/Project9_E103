@@ -83,7 +83,7 @@ class LineSegment:
         self._endpoint_1 = endpoint1
         self._endpoint_2 = endpoint2
 
-    def get_x_coord(self):
+    def get_endpoint_1(self):
         """
         Returns the first endpoint of the line segment.
 
@@ -91,7 +91,7 @@ class LineSegment:
         """
         return self._endpoint_1
 
-    def get_y_coord(self):
+    def get_endpoint_2(self):
         """
         Returns the second endpoint of the line segment.
 
@@ -99,7 +99,7 @@ class LineSegment:
         """
         return self._endpoint_2
 
-    def set_x(self):
+    def set_endpoint_1(self):
         """
         Sets the first endpoint of the line segment.
 
@@ -107,7 +107,7 @@ class LineSegment:
         """
         self._endpoint_1 = endpoint1
 
-    def set_x(self):
+    def set_endpoint_2(self):
         """
         Sets the second endpoint of the line segment.
 
