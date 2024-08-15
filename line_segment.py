@@ -155,6 +155,21 @@ class LineSegment:
             if slope_1 is None or slope_2 is None:
                 return False
 
+            # Handle case where one or both line segments have zero length
+            if self.length() == 0 or other_line.length() == 0:
+                # If the zero-length segment lies exactly on the other segment, return False
+                if self.length() == 0:
+                    single_point = self.get_endpoint_1()
+                    if other_line.get_endpoint_1().distance_to(
+                            single_point) + other_line.get_endpoint_2().distance_to(single_point) == other_line.length():
+                        return False
+                if other_line.length() == 0:
+                    single_point = other_line.get_endpoint_1()
+                    if self.get_endpoint_1().distance_to(single_point) + self.get_endpoint_2().distance_to(
+                            single_point) == self.length():
+                        return False
+            return True
+
             # Compare slopes using floating-point precision as instructed in prompt
             return abs(slope_1 - slope_2) < 0.000001
         except ValueError:
@@ -199,7 +214,14 @@ class LineSegment:
 # line_seg_6 = LineSegment(point_11, point_12)
 # print(line_seg_1.is_parallel_to(line_seg_6)) # False
 #
-# point_13 = Point(1,-4)
-# point_14 = Point(4,-1)
-# line_seg_7 = LineSegment(point_13, point_14)
+point_13 = Point(1,-4)
+point_14 = Point(4,-1)
+line_seg_7 = LineSegment(point_13, point_14)
 # print(line_seg_6.is_parallel_to(line_seg_7))  # True
+
+point_15 = Point(1,1)
+point_16 = Point(1,1)
+line_seg_8 = LineSegment(point_15, point_16)
+print(line_seg_7.is_parallel_to(line_seg_8))  # True
+
+
